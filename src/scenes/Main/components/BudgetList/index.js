@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import BudgetCategory from './components/BudgetCategory'
-import DebitModal from './components/DebitModal'
+import BudgetCategory from '../BudgetCategory'
 
 class BudgetList extends Component {
 
@@ -12,8 +11,6 @@ class BudgetList extends Component {
         {data.map((data) => (
             <BudgetCategory key={data.category} category={data.category} xs={12} />
         ))}
-
-        <DebitModal />
       </div>
     )
   }

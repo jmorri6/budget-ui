@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { hideAddTxnModal } from '../../../../../../actions/add-txn-modal'
-import { addTxn } from '../../../../../../actions/add-txn'
+import { addTxn } from '../../../../actions/add-txn'
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Dialog, {
@@ -23,7 +22,7 @@ class DebitModal extends Component {
     }
   }
   exitModal = () => {
-    this.props.hideAddTxnModal()
+    this.props.close();
   };
 
   addTxn = () => {
@@ -45,11 +44,11 @@ class DebitModal extends Component {
     return (
       <div>
         <Dialog
-          open={this.props.showAddTxnModalState.isOpen || false}
+          open={this.props.isOpen}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
-            {this.props.showAddTxnModalState.name || ''}</DialogTitle>
+            {this.props.title}</DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
@@ -64,7 +63,7 @@ class DebitModal extends Component {
               onChange={() => {this.amtChange()}}
             />
             <TextField
-              required={this.props.showAddTxnModalState.requireDesc || false}
+              required={this.props.requiresDesc}
               error={this.state.descError}
               margin="dense"
               id="name"
@@ -90,14 +89,13 @@ class DebitModal extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    showAddTxnModalState : state.showAddTxn,
-    addTxnState: state.addTxn
+    addTxn: state.addTxn
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    hideAddTxnModal, addTxn
+    addTxn
   }, dispatch)
 }
 

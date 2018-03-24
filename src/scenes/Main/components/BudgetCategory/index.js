@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import GridList, { GridListTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/List/ListSubheader';
 import style from './budget-category.jss.js'
-import BudgetCard from './components/BudgetCard';
+import BudgetCard from '../BudgetCard';
 
 
 class BudgetCategory extends Component {

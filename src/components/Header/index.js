@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
@@ -7,13 +8,17 @@ import style from './header.jss.js'
 import ActionMenu from './components/ActionMenu'
 
 export class Header extends Component {
-
   render() {
 
     let leftButton = <div />
     let rightButton = <div />
     if(this.props.title !== 'Morris Budget') {
-      leftButton = <IconButton onClick={this.props.backArrow} style={style.menuButton} aria-label="ArrowBack"><ArrowBack /></IconButton>
+      leftButton = 
+        <Link to={"/"}>
+          <IconButton style={style.menuButton} aria-label="ArrowBack">
+            <ArrowBack />
+          </IconButton>
+        </Link>
     }
     else{
       rightButton = <ActionMenu style={style.moreVertButton}/>

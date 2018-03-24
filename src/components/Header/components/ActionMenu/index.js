@@ -1,25 +1,23 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import IconButton from 'material-ui/IconButton'
 import { Redirect } from 'react-router'
 import MoreVertIcon from 'material-ui-icons/MoreVert'
 import Menu, { MenuItem } from 'material-ui/Menu';
 import style from './action-menu.jss.js'
-import { showIncomeModal } from '../../../../actions/income-modal'
 
 export class ActionMenu extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      anchorEl: null
+      anchorEl: null,
+      path: "",
     }
   }
 
-  openDialog = menuItem => {
+  redirect = menuItem => {
     if (menuItem === "Income") {
-      this.props.showIncomeModal()
+      this.setState({ path: "/income" })
     } else if (menuItem === "Allocations") {
 
     } else if (menuItem === "Transfer") {
@@ -43,6 +41,10 @@ export class ActionMenu extends Component {
 
 
   render() {
+    if (this.state.path !== "") {
+      return <Redirect to={this.state.path} />
+    }
+
     let menuItems = ["Income", "Allocations", "Transfer", "History", "Manual Add"]
     const { anchorEl } = this.state;
 
@@ -63,7 +65,7 @@ export class ActionMenu extends Component {
           }}
         >
           {menuItems.map(option => (
-            <MenuItem key={option} onClick={() => {this.openDialog(option)}}>
+            <MenuItem key={option} onClick={() => {this.redirect(option)}}>
               {option}
             </MenuItem>
           ))}
@@ -72,14 +74,5 @@ export class ActionMenu extends Component {
     )
   }
 }
-const mapStateToProps = (state) => {
-    return {
-        //displayIncomeModal : state.displayIncomeModal
-    }
-  }
-  
-function mapDispatchToProps(dispatch) {
-return bindActionCreators({
-    showIncomeModal }, dispatch)
-}
-export default connect(mapStateToProps, mapDispatchToProps)(ActionMenu)
+
+export default ActionMenu
