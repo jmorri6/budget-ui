@@ -1,43 +1,56 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { addTxn } from '../../../../actions/add-txn'
 import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
+import Input from 'material-ui/Input';
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogTitle,
 } from 'material-ui/Dialog';
+import { addTxn } from '../../../../services';
+import { DEBIT } from '../../../../services/txn-type';
 
 class DebitModal extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      amountError: false,
-      descError: false,
-      amount: '',
+      amountError: true,
+      descError: this.props.requireDesc,
+      amount: 0,
       desc: ''
     }
   }
+
   exitModal = () => {
+    this.setState({ amountError: true, descError: this.props.requireDesc, amount: 0, desc: ''})
     this.props.close();
   };
 
-  addTxn = () => {
-    if (this.state.amountError || this.state.descError) {
+  addTransaction = () => {
+    if (this.state.amountError === true || this.state.descError === true) {
       return
     }
-
+    let payload = { 
+      budget: { id: this.props.id, balance: this.props.balance},
+      amount: this.state.amount,
+      desc: this.state.desc || "",
+      type: DEBIT
+    }
+    addTxn(payload).then(()=> {
+      this.exitModal();
+    })
   }
 
-  amtChange = () => {
-    this.setState({amountError:this.state.amount <=0})
+  amtChange = (event) => {
+    let amt = event.target.value;
+    let error = (amt <= 0);
+    this.setState({amount:amt, amountError: error})
   }
 
-  descChange = () => {
-    this.setState({descError:this.props.showAddTxnModalState.requreDesc && this.state.desc.trim() === ''})
+  descChange = (event) => {
+    let description = event.target.value;
+    let error = (this.props.requireDesc ? description.trim() === "" : false);
+    this.setState({desc: description, descError:error })
   }
 
   render() {
@@ -50,34 +63,30 @@ class DebitModal extends Component {
           <DialogTitle id="form-dialog-title">
             {this.props.title}</DialogTitle>
           <DialogContent>
-            <TextField
+            <Input
               autoFocus
-              required
               error={this.state.amountError}
               margin="dense"
               id="amount"
-              label="Amount"
+              placeholder="Amount"
               type="Number"
               fullWidth
-              value={this.state.amount}
-              onChange={() => {this.amtChange()}}
+              onChange={this.amtChange}
             />
-            <TextField
-              required={this.props.requiresDesc}
+            <Input
               error={this.state.descError}
               margin="dense"
-              id="name"
-              label="Description"
+              id="description"
+              placeholder="Description"
               fullWidth
-              value={this.state.desc}
-              onChange={() => {this.descChange()}}
+              onChange={this.descChange}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={() => {this.exitModal()}} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => {this.exitModal()}} color="primary">
+            <Button onClick={this.addTransaction} variant="raised" color="primary">
               Ok
             </Button>
           </DialogActions>
@@ -87,16 +96,4 @@ class DebitModal extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    addTxn: state.addTxn
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    addTxn
-  }, dispatch)
-}
-
-export default connect( mapStateToProps, mapDispatchToProps )(DebitModal)
+export default (DebitModal)

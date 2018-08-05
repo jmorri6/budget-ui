@@ -1,7 +1,6 @@
 const style = {
     tile: {
-        width: '12.5%',
-        height: '110px'
+        height: '160px'
     },
     card: {
         margin:"5px"
@@ -12,17 +11,7 @@ const style = {
         paddingRight:"8px",
         paddingBottom:"5px"
     },
-    iconSize: {
-        width:"20px",
-        height:"20px"
-    },
-    addButton: {
-        minHeight:"25px",
-        width: "25px",
-        height:"25px",
-    },
     money: {
-        fontSize:"1.0rem",
         fontWeight:900
     },
     red: {

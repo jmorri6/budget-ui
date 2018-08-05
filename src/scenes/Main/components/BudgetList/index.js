@@ -1,19 +1,39 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import BudgetCategory from '../BudgetCategory'
+import { getBudgets } from '../../../../actions/budgets'
 
 class BudgetList extends Component {
 
-  render() {
-      let data = [{"category":"bills"}]
+  componentDidMount() {
+    this.props.getBudgets()
+  }
 
+  render() {
     return(
       <div> 
-        {data.map((data) => (
-            <BudgetCategory key={data.category} category={data.category} xs={12} />
+        {this.props.categoriesWithBudgets.map((category) => (
+            <BudgetCategory key={category.categoryName}
+             categoryName={category.categoryName}
+             budgets={category.budgets}
+             refreshBudgets={this.props.getBudgets} xs={12} />
         ))}
       </div>
     )
   }
 }
 
-export default BudgetList
+const mapStateToProps = (state) => {
+  return {
+    categoriesWithBudgets: state.budgets.wrappedBudgets
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getBudgets
+  }, dispatch)
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )(BudgetList)

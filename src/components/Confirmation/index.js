@@ -6,52 +6,35 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { hideConfirmation } from '../../../../actions/confirmation-modal'
 
 class Confirmation extends Component {
-
-    handleClose = () => {
-      this.props.hideConfirmation()
-    };
-
   render() {
     return(
         <Dialog
-        open={this.props.showConfirmation.isOpen}
+        open={this.props.isOpen}
         disableBackdropClick
         disableEscapeKeyDown
-        onClose={this.handleClose}
         aria-labelledby="form-dialog-title"
         >
-            <DialogTitle id="form-dialog-title">{this.props.showConfirmation.title}</DialogTitle>
+            <DialogTitle id="form-dialog-title">{this.props.title}</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    {this.props.showConfirmation.text}
+                    {this.props.text}
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={this.handleClose} color="secondary">
-                    Cancel
+                <Button onClick={this.props.close} color="primary">
+                    {this.props.cancelText}
                 </Button>
-                <Button onClick={this.props.showConfirmation.okCallback} color="primary">
-                    Ok
+                {this.props.okText !== '' &&
+                <Button onClick={this.props.okCallback} variant="raised" color="primary">
+                    {this.props.okText}
                 </Button>
+                }
             </DialogActions>
         </Dialog>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        showConfirmation : state.showConfirmation
-    }
-  }
-  
-function mapDispatchToProps(dispatch) {
-return bindActionCreators({
-    hideConfirmation }, dispatch)
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Confirmation)
+export default Confirmation

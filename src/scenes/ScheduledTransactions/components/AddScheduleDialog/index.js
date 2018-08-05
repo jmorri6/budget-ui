@@ -7,10 +7,10 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
-import { addIncome } from '../../../../services/index';
+import { addSchedule } from '../../../../services/index';
 
 //TODO: Notes for deduction
-class AddIncomeDialog extends Component {
+class AddScheduleDialog extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -26,7 +26,7 @@ class AddIncomeDialog extends Component {
     this.props.close()
   };
 
-  descChanged = (event) => {
+  nameChanged = (event) => {
     let input = event.target.value
     this.setState({ desc: input });
     this.updateCanSave(input, this.state.amount, this.state.frequencyPerYr)
@@ -63,7 +63,7 @@ class AddIncomeDialog extends Component {
         frequencyPerYr: this.state.frequencyPerYr,
         monthlyDeduction: this.state.monthlyDeduction
     }
-    addIncome(payload)
+    addSchedule(payload)
     .then(function () {
         self.props.close();
     })
@@ -83,11 +83,11 @@ class AddIncomeDialog extends Component {
             onClose={this.handleClose}
             aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">Add Income</DialogTitle>
+                <DialogTitle id="form-dialog-title">Add Scheduled Transaction</DialogTitle>
                 <DialogContent>
                     <FormControl style={{margin:'2px'}}>
                         <InputLabel htmlFor="desc">Name</InputLabel>
-                        <Input id="desc" onChange={this.descChanged} />
+                        <Input id="desc" onChange={this.nameChanged} />
                     </FormControl>
                     <br />
                     <FormControl style={{margin:'2px'}}>
@@ -119,4 +119,4 @@ class AddIncomeDialog extends Component {
   }
 }
 
-export default AddIncomeDialog
+export default AddScheduleDialog

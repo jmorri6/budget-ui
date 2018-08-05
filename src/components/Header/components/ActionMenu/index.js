@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import IconButton from 'material-ui/IconButton'
-import { Redirect } from 'react-router'
+import { Link } from 'react-router'
 import MoreVertIcon from 'material-ui-icons/MoreVert'
 import Menu, { MenuItem } from 'material-ui/Menu';
 import style from './action-menu.jss.js'
@@ -16,17 +16,6 @@ export class ActionMenu extends Component {
   }
 
   redirect = menuItem => {
-    if (menuItem === "Income") {
-      this.setState({ path: "/income" })
-    } else if (menuItem === "Allocations") {
-
-    } else if (menuItem === "Transfer") {
-
-    } else if (menuItem === "History") {
-
-    } else if (menuItem === "Manual Add") {
-
-    }
     this.setState({ anchorEl: null })
   }
 
@@ -38,16 +27,7 @@ export class ActionMenu extends Component {
     this.setState({ anchorEl: null });
   };
 
-
-
   render() {
-    if (this.state.path !== "") {
-      return <Redirect to={this.state.path} />
-    }
-
-    let menuItems = ["Income", "Allocations", "Transfer", "History", "Manual Add"]
-    const { anchorEl } = this.state;
-
     return(
       <div>
         <IconButton aria-label="MoreVert" style={style.white} onClick={this.handleClick}>
@@ -56,7 +36,7 @@ export class ActionMenu extends Component {
         <Menu
           id="long-menu"
           anchorEl={this.state.anchorEl}
-          open={Boolean(anchorEl)}
+          open={Boolean(this.state.anchorEl)}
           onClose={this.handleClose}
           PaperProps={{
             style: {
@@ -64,11 +44,32 @@ export class ActionMenu extends Component {
             },
           }}
         >
-          {menuItems.map(option => (
-            <MenuItem key={option} onClick={() => {this.redirect(option)}}>
-              {option}
+          <Link to="/createbudget" style={style.linkStyle}>
+            <MenuItem >
+              Create Budget
             </MenuItem>
-          ))}
+          </Link>
+          <Link to="/income" style={style.linkStyle}>
+            <MenuItem >
+              Income
+            </MenuItem>
+          </Link>
+          <Link to="/history" style={style.linkStyle}>
+            <MenuItem >
+              History
+            </MenuItem>
+          </Link>
+          <Link to="/manageIncome" style={style.linkStyle}>
+            <MenuItem >
+              Add/Transfer Funds
+            </MenuItem>
+          </Link>
+          <Link to="/scheduled" style={style.linkStyle}>
+            <MenuItem >
+              Scheduled Transactions
+            </MenuItem>
+          </Link>
+
         </Menu>
       </div>
     )

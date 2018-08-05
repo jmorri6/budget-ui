@@ -21,22 +21,25 @@ class Income extends Component {
         })
     }
 
+    hideAddIncomeDialog = () => {
+        this.setState({ isAddIncomeOpen: false });
+    }
+
     render() {
-        let data = [];
         return(
         <div>
             <Header title="Income" />
-            <IncomeTable data={data} />
-                <div>
-                    <Button variant="fab" color="primary"style={style.addButton} 
-                        onClick={() => {this.showAddIncomeDialog()}}>
-                        <AddIcon style={style.iconSize}/>
-                    </Button>
-                </div>
-            <AddIncomeDialog isOpen={this.state.isAddIncomeOpen}/>
+            <IncomeTable />
+            <div style={style.buttonDiv}>
+                <Button variant="fab" color="primary" style={style.addButton} 
+                    onClick={this.showAddIncomeDialog}>
+                    <AddIcon style={style.iconSize}/>
+                </Button>
+            </div>
+            <AddIncomeDialog isOpen={this.state.isAddIncomeOpen} close={this.hideAddIncomeDialog} />
         </div>
         )
     }
 }
-
-export default Income
+  
+  export default Income
