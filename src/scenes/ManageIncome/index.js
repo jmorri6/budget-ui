@@ -5,8 +5,6 @@ import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { FormControl } from 'material-ui/Form';
-import Select from 'material-ui/Select';
-import { MenuItem } from 'material-ui/Menu';
 import Input, { InputLabel } from 'material-ui/Input';
 import Typography from 'material-ui/Typography';
 import { addTxn } from '../../services/index';

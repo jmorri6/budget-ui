@@ -13,8 +13,7 @@ export function getBudgets() {
             dispatch(budgetsRetrieved(response));
         })
         .catch(function (error) {
-            //TODO: DISPLAY error
-            //dispatch(displayError(error));
+            console.error(error);
         });
     }
 };

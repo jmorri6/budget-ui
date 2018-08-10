@@ -47,6 +47,10 @@ export function addTxn(payload) {
     return axios.post(baseUrl + "/transactions", payload);
 }
 
+export function searchTransactionsByDate(payload) {
+    return axios.post(baseUrl + "/transactions/history", payload);
+}
+
 export function getAllSchedules() {
     return axios.get(baseUrl + "/schedules");
 }
