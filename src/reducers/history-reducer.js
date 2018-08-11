@@ -3,7 +3,7 @@ import { GET_HISTORY, GET_HISTORY_SUCCESS } from '../actions/get-history'
 export default function historyReducer(
     state = {
       inProgress: false,
-      history: []
+      transactions: []
     },
     action
   ) {
@@ -15,7 +15,7 @@ export default function historyReducer(
     case GET_HISTORY_SUCCESS:
       return Object.assign({}, state, { 
           inProgress: false,
-          history: action.history
+          transactions: action.transactions
         })
     default:
       return state

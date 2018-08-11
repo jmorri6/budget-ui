@@ -34,7 +34,8 @@ class BudgetHistory extends Component {
         this.state = {
             toDate: this.getDefaultToDate(),
             fromDate: this.getDefaultFromDate(),
-            selectedBudget: -1
+            selectedBudget: 0,
+            hasErrors: false
         }
     }
 
@@ -63,6 +64,28 @@ class BudgetHistory extends Component {
         this.setState({ selectedBudget: event.target.value });
     }
 
+    fromChanged = (event) => {
+        if (event.target.value > this.state.toDate) {
+            this.setState({hasErrors: true});
+        } else {
+            this.setState({hasErrors: false});
+        }
+        this.setState({fromDate: event.target.value});
+    }
+
+    toChanged = (event) => {
+        if (event.target.value < this.state.fromDate) {
+            this.setState({hasErrors: true});
+        } else {
+            this.setState({hasErrors: false});
+        }
+        this.setState({toDate: event.target.value});
+    }
+
+    search = () => {
+        this.props.getHistory(this.state.fromDate, this.state.toDate, this.state.selectedBudget);
+    }
+
     render() {
         return(
         <div>
@@ -76,18 +99,16 @@ class BudgetHistory extends Component {
                                 label="From"
                                 type="date"
                                 defaultValue={this.getDefaultFromDate()}
-                                InputLabelProps={{
-                                shrink: true,
-                                }}
+                                InputLabelProps={{ shrink: true }}
+                                onChange={this.fromChanged}
                             />
                             <TextField
                                 id="to"
                                 label="To"
                                 type="date"
                                 defaultValue={this.getDefaultToDate()}
-                                InputLabelProps={{
-                                shrink: true,
-                                }}
+                                InputLabelProps={{ shrink: true }}
+                                onChange={this.toChanged}
                             />
                             <FormControl>
                                 <InputLabel htmlFor="budget">Budget</InputLabel>
@@ -96,13 +117,16 @@ class BudgetHistory extends Component {
                                 onChange={this.budgetChanged}
                                 inputProps={{ id: 'budget' }}
                                 >
-                                {this.props.budgets.map((budget) => (
+                                <MenuItem key={0} value={0}>-- Select --</MenuItem>
+                                {this.props.budgets.map((budget) => {
+                                    return (
                                     <MenuItem key={budget.id} value={budget.id}>{budget.name}</MenuItem>
-                                ))}
+                                    )
+                                })}
                                 </Select>
                             </FormControl>
                             <FormControl style={{marginTop:'15px'}}>
-                                <Button color="primary" variant="raised" onClick={this.search} disabled={this.state.hasErrors || this.props.history.inProgress} >
+                                <Button color="primary" variant="raised" onClick={this.search} disabled={this.state.hasErrors} >
                                     Search
                                 </Button>
                             </FormControl>
@@ -111,20 +135,24 @@ class BudgetHistory extends Component {
                             <Table>
                                 <TableHead>
                                 <TableRow>
-                                    <TableCell>Transaction Type</TableCell>
-                                    <TableCell numeric>Amount</TableCell>
+                                    <TableCell>Budget</TableCell>
                                     <TableCell>Description</TableCell>
+                                    <TableCell numeric>Amount</TableCell>
+                                    <TableCell>Type</TableCell>
                                     <TableCell>Date</TableCell>
                                 </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                {this.props.history.history.map(n => {
+                                {this.props.transactions.map(n => {
+                                    let formatted = n.created.substring(4, 6) + "-" 
+                                    + n.created.substring(6,8) + "-" + n.created.substring(0,4)
                                     return (
                                     <TableRow key={n.id}>
-                                        <TableCell>{n.type}</TableCell>
+                                        <TableCell>{n.budget.name}</TableCell>
+                                        <TableCell>{n.desc}</TableCell>
                                         <TableCell numeric>{toNumericString(n.amount)}</TableCell>
-                                        <TableCell>{n.description}</TableCell>
-                                        <TableCell>{n.date}</TableCell>
+                                        <TableCell>{n.type}</TableCell>
+                                        <TableCell>{formatted}</TableCell>
                                     </TableRow>
                                     );
                                 })}
@@ -142,7 +170,7 @@ class BudgetHistory extends Component {
 const mapStateToProps = (state) => {
     return {
         budgets: state.budgets.budgets,
-        history: state.history
+        transactions: state.history.transactions
     }
   }
   
