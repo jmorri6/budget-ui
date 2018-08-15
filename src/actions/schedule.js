@@ -6,7 +6,6 @@ export function getSchedules() {
     return function(dispatch) {
         getAllSchedules()
         .then(function (response) {  
-            console.log(response.data);
             dispatch( {
                 type: GET_SCHEDULES,
                 schedules: response.data

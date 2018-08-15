@@ -60,9 +60,13 @@ export function deleteSchedule(id) {
 }
 
 export function addSchedule(payload) {
-    return axios.post(baseUrl + "/schedules");
+    return axios.post(baseUrl + "/schedules", payload);
 }
 
 export function toNumericString(number) {
     return number.toLocaleString();
 }
+export function getFormattedDate(date) {
+    let d = new Date(date);
+    return d.toLocaleDateString();
+};

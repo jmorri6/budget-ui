@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Header from '../../components/Header'
-import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
-import Grid from 'material-ui/Grid';
-import { FormControl } from 'material-ui/Form';
-import Input, { InputLabel } from 'material-ui/Input';
-import Typography from 'material-ui/Typography';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import Typography from '@material-ui/core/Typography';
 import { addTxn } from '../../services/index';
 import {CREDIT, DEBIT} from '../../services/txn-type'
 import { find } from 'lodash';
@@ -18,10 +19,10 @@ class ManageIncome extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            selectedBudget: -1,
+            selectedBudget: 0,
             addAmount: '',
-            fromBudget: -1,
-            toBudget: -1,
+            fromBudget: 0,
+            toBudget: 0,
             transferAmount: '',
             amountDisabled: true,
             desc: '',
@@ -129,8 +130,8 @@ class ManageIncome extends Component {
                         <Grid container justify="center" style={{marginTop:'30px'}}>
                             <Grid item xs={4}>
                                 <FormControl>
-                                    <InputLabel htmlFor="budget">Budget</InputLabel>
                                     <BudgetDropDown
+                                    label="Budget"
                                     value={this.state.selectedBudget}
                                     onChange={this.budgetChanged}
                                     inputProps={{ id: 'budget' }}
@@ -177,24 +178,20 @@ class ManageIncome extends Component {
                         <Typography variant="headline" component="h2">Transfer Funds</Typography>
                         <Grid container alignItems='center' justify="space-around" style={{marginTop:'30px'}}>
                             <Grid item xs={4}>
-                                <FormControl>
-                                    <InputLabel htmlFor="fromBudget" style={{width:'100px'}}>From Budget</InputLabel>
-                                    <BudgetDropDown
-                                    value={this.state.fromBudget}
-                                    onChange={this.fromBudgetChanged}
-                                    inputProps={{ id: 'fromBudget' }}
-                                    />
-                                </FormControl>
+                                <BudgetDropDown
+                                label="From Budget"
+                                value={this.state.fromBudget}
+                                onChange={this.fromBudgetChanged}
+                                inputProps={{ id: 'fromBudget' }}
+                                />
                             </Grid>
                             <Grid item xs={4}>
-                                <FormControl>
-                                    <InputLabel htmlFor="toBudget" style={{width:'100px'}}>To Budget</InputLabel>
-                                    <BudgetDropDown
-                                    value={this.state.toBudget}
-                                    onChange={this.toBudgetChanged}
-                                    inputProps={{ id: 'toBudget' }}
-                                    />
-                                </FormControl>
+                                <BudgetDropDown
+                                label="To Budget"
+                                value={this.state.toBudget}
+                                onChange={this.toBudgetChanged}
+                                inputProps={{ id: 'toBudget' }}
+                                />
                             </Grid>
                             <Grid item xs={4}>
                                 <FormControl>

@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import Card, { CardContent } from 'material-ui/Card';
-import Grid from 'material-ui/Grid';
-import { GridListTile } from 'material-ui/GridList';
-import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import AddIcon from 'material-ui-icons/Add';
-import DeleteIcon from 'material-ui-icons/Delete';
-import CreateIcon from 'material-ui-icons/Create';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import GridListTile from '@material-ui/core/GridListTile';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CreateIcon from '@material-ui/icons/Create';
 import style from './budget-card.jss.js';
 import DebitModal from '../DebitModal';
 import Confirmation from '../../../../components/Confirmation'

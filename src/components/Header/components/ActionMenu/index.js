@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import IconButton from 'material-ui/IconButton'
+import IconButton from '@material-ui/core/IconButton'
 import { Link } from 'react-router'
-import MoreVertIcon from 'material-ui-icons/MoreVert'
-import Menu, { MenuItem } from 'material-ui/Menu';
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import style from './action-menu.jss.js'
 
 export class ActionMenu extends Component {

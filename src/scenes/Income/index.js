@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import Header from '../../components/Header'
 import IncomeTable from './components/IncomeTable'
 import AddIncomeDialog from './components/AddIncomeDialog'
-import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import style from './income.jss.js'
 
 class Income extends Component {

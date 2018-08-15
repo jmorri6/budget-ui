@@ -1,9 +1,19 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import Header from '../../components/Header'
-import ScheduleTable from './components/ScheduleTable'
 import AddScheduleDialog from './components/AddScheduleDialog'
-import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import { getSchedules } from '../../actions/schedule'
+import { deleteSchedule, getFormattedDate} from '../../services/index';
 
 const style = {
     buttonDiv: {
@@ -20,6 +30,10 @@ class ScheduledTransactions extends Component {
         }
     }
 
+    componentWillMount = () => {
+        this.props.getSchedules();
+    }
+
     shoAddDialog = () => {
         this.setState( {
             isDialogOpen: true
@@ -28,13 +42,52 @@ class ScheduledTransactions extends Component {
 
     hideDialog = () => {
         this.setState({ isDialogOpen: false });
+        this.props.getSchedules();
+    }
+
+    delete = (id) => {
+        //TODO: show confirmation before deleting
+        deleteSchedule(id);
+        this.props.getSchedules();
     }
 
     render() {
         return(
         <div>
             <Header title="Scheduled Transactions" />
-            <ScheduleTable />
+            <Table>
+                <TableHead>
+                <TableRow>
+                    <TableCell>Budget</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Amount</TableCell>
+                    <TableCell>Day to Run</TableCell>
+                    <TableCell>Last Ran</TableCell>
+                    <TableCell>Next Run Time</TableCell>
+                    <TableCell>Delete</TableCell>
+                </TableRow>
+                </TableHead>
+                <TableBody>
+                    {! this.props.schedules && <TableRow></TableRow>}
+                {this.props.schedules && this.props.schedules.map(n => {
+                    return (
+                    <TableRow key={n.id}>
+                        <TableCell>{n.budgetName}</TableCell>
+                        <TableCell>{n.name}</TableCell>
+                        <TableCell>{n.amount}</TableCell>
+                        <TableCell>{n.dayToRun}</TableCell>
+                        <TableCell>{n.lastRunTime ? getFormattedDate(n.lastRunTime) : ''}</TableCell>
+                        <TableCell>{getFormattedDate(n.nextRunTime)}</TableCell>
+                        <TableCell>
+                            <IconButton aria-label="Delete" onClick={() => this.delete(n.id)}>
+                                <DeleteIcon/>
+                            </IconButton>
+                        </TableCell>
+                    </TableRow>
+                    );
+                })}
+                </TableBody>
+            </Table>
             <div style={style.buttonDiv}>
                 <Button variant="fab" color="primary" style={style.addButton} 
                     onClick={this.shoAddDialog}>
@@ -47,4 +100,17 @@ class ScheduledTransactions extends Component {
     }
 }
   
-  export default ScheduledTransactions
+
+const mapStateToProps = (state) => {
+    return {
+        schedules: state.schedules.schedules
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getSchedules
+    }, dispatch)
+  }
+
+export default connect( mapStateToProps, mapDispatchToProps )(ScheduledTransactions)

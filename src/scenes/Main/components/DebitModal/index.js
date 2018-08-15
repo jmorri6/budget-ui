@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import Button from 'material-ui/Button';
-import Input from 'material-ui/Input';
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from 'material-ui/Dialog';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { addTxn } from '../../../../services';
 import { DEBIT } from '../../../../services/txn-type';
 

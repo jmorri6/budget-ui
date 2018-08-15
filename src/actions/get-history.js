@@ -1,6 +1,6 @@
 import { searchTransactionsByDate } from '../services/index';
 
-export const GET_HISTORY = 'GET_HISTORY'
+export const RESET_HISTORY = 'RESET_HISTORY'
 export const GET_HISTORY_SUCCESS = 'GET_HISTORY_SUCCESS'
 
 
@@ -21,6 +21,12 @@ export function getHistory(fromDate, toDate, budgetId) {
         .catch(function (error) {
             console.error(error);
         });
+    }
+};
+
+export function resetHistory() {
+    return {
+        type: RESET_HISTORY
     }
 };
 

@@ -1,71 +1,76 @@
 import React, { Component } from 'react'
-import Button from 'material-ui/Button';
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl } from 'material-ui/Form';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 import { addSchedule } from '../../../../services/index';
+import BudgetDropDown from '../../../../components/BudgetDropDown';
 
 //TODO: Notes for deduction
 class AddScheduleDialog extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            desc: "",
+            budgetId: 0,
+            name: "",
             amount: 0,
-            frequencyPerYr: 0,
-            monthlyDeduction: 0,
+            dayToRun: 0,
             saveDisabled: true
         }
     }
     
   handleClose = () => {
+    this.setState( {budgetId: 0, name: "", amount: 0, dayToRun: 0 })
     this.props.close()
   };
 
+
+  budgetChanged = (event) => {
+    let input = event.target.value
+    this.setState({ budgetId: input });
+    this.updateCanSave(input, this.state.name, this.state.amount, this.state.dayToRun)
+  }
+
   nameChanged = (event) => {
     let input = event.target.value
-    this.setState({ desc: input });
-    this.updateCanSave(input, this.state.amount, this.state.frequencyPerYr)
+    this.setState({ name: input });
+    this.updateCanSave(this.state.budgetId, input, this.state.amount, this.state.dayToRun)
   }
   amountChanged = (event) => {
     let input = event.target.value
     this.setState({ amount: input });
-    this.updateCanSave(this.state.desc, input, this.state.frequencyPerYr)
+    this.updateCanSave(this.state.budgetId, this.state.name, input, this.state.dayToRun)
   }
-  frequencyChanged = (event) => {
+  dayChanged = (event) => {
     let input = event.target.value
-    this.setState({ frequencyPerYr: input });
-    this.updateCanSave(this.state.desc, this.state.amount, input)
-  }
-  deductionChanged = (event) => {
-    let input = event.target.value
-    this.setState({ monthlyDeduction: input })
+    this.setState({ dayToRun: input });
+    this.updateCanSave(this.state.budgetId, this.state.name, this.state.amount, input)
   }
 
-  updateCanSave = (desc, amount, frequency) => {
-      if (desc !== "" && amount > 0 && frequency > 0) {
+  updateCanSave = (budgetId, name, amount, dayToRun) => {
+      if (budgetId > 0 && name !== "" && amount > 0 && dayToRun > 0) {
           this.setState({ saveDisabled: false })
       } else {
-          this.setState({ saveDisabled: true})
+          this.setState({ saveDisabled: true })
       }
   }
 
   //TODO: refresh grid when income is saved
-  saveIncome = () => {
+  addScheduledTxn = () => {
     let self = this;
     let payload = {
-        desc: this.state.desc,
+        budgetId: this.state.budgetId,
+        name: this.state.name,
         amount: this.state.amount,
-        frequencyPerYr: this.state.frequencyPerYr,
-        monthlyDeduction: this.state.monthlyDeduction
+        dayToRun: this.state.dayToRun
     }
     addSchedule(payload)
     .then(function () {
-        self.props.close();
+        self.handleClose();
     })
     .catch(function (error) {
         //TODO: show notification
@@ -86,6 +91,10 @@ class AddScheduleDialog extends Component {
                 <DialogTitle id="form-dialog-title">Add Scheduled Transaction</DialogTitle>
                 <DialogContent>
                     <FormControl style={{margin:'2px'}}>
+                        <BudgetDropDown value={this.state.budgetId} onChange={this.budgetChanged} />
+                    </FormControl>
+                    <br />
+                    <FormControl style={{margin:'2px'}}>
                         <InputLabel htmlFor="desc">Name</InputLabel>
                         <Input id="desc" onChange={this.nameChanged} />
                     </FormControl>
@@ -96,20 +105,16 @@ class AddScheduleDialog extends Component {
                     </FormControl>
                     <br />
                     <FormControl style={{margin:'2px'}}>
-                        <InputLabel htmlFor="frequencyPerYr">Frequency per year</InputLabel>
-                        <Input id="frequencyPerYr" type="number" onChange={this.frequencyChanged} />
+                        <InputLabel htmlFor="frequencyPerYr">Day to Run</InputLabel>
+                        <Input id="dayToRun" type="number" onChange={this.dayChanged} />
                     </FormControl>
                     <br />
-                    <FormControl style={{margin:'2px'}}>
-                        <InputLabel htmlFor="monthlyDeduction">Monthly Deduction</InputLabel>
-                        <Input id="monthlyDeduction" type="number" onChange={this.deductionChanged} />
-                    </FormControl>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button disabled={this.state.saveDisabled} onClick={this.saveIncome} color="primary">
+                    <Button disabled={this.state.saveDisabled} onClick={this.addScheduledTxn} color="primary">
                         Ok
                     </Button>
                 </DialogActions>

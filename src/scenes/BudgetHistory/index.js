@@ -2,30 +2,19 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Header from '../../components/Header'
-import Paper from 'material-ui/Paper';
-import Grid from 'material-ui/Grid';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import { FormControl } from 'material-ui/Form';
-import Select from 'material-ui/Select';
-import { MenuItem } from 'material-ui/Menu';
-import Input, { InputLabel } from 'material-ui/Input';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import FormControl from '@material-ui/core/FormControl';
 import { toNumericString } from '../../services';
-import { getHistory } from '../../actions/get-history';
-
-
-//used for budget drop down
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  }
-}
+import { getHistory, resetHistory } from '../../actions/get-history';
+import BudgetDropDown from '../../components/BudgetDropDown';
 
 class BudgetHistory extends Component {
 
@@ -37,6 +26,9 @@ class BudgetHistory extends Component {
             selectedBudget: 0,
             hasErrors: false
         }
+    }
+    componentWillUnmount() {
+        this.props.resetHistory();
     }
 
     getDefaultToDate = () => {
@@ -110,21 +102,11 @@ class BudgetHistory extends Component {
                                 InputLabelProps={{ shrink: true }}
                                 onChange={this.toChanged}
                             />
-                            <FormControl>
-                                <InputLabel htmlFor="budget">Budget</InputLabel>
-                                <Select
-                                value={this.state.selectedBudget}
-                                onChange={this.budgetChanged}
-                                inputProps={{ id: 'budget' }}
-                                >
-                                <MenuItem key={0} value={0}>-- Select --</MenuItem>
-                                {this.props.budgets.map((budget) => {
-                                    return (
-                                    <MenuItem key={budget.id} value={budget.id}>{budget.name}</MenuItem>
-                                    )
-                                })}
-                                </Select>
-                            </FormControl>
+                            <BudgetDropDown
+                            label="Budget"
+                            value={this.state.selectedBudget}
+                            onChange={this.budgetChanged}
+                            />
                             <FormControl style={{marginTop:'15px'}}>
                                 <Button color="primary" variant="raised" onClick={this.search} disabled={this.state.hasErrors} >
                                     Search
@@ -176,7 +158,7 @@ const mapStateToProps = (state) => {
   
   function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        getHistory
+        getHistory, resetHistory
     }, dispatch)
   }
   

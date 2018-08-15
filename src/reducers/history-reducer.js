@@ -1,20 +1,18 @@
-import { GET_HISTORY, GET_HISTORY_SUCCESS } from '../actions/get-history'
+import { RESET_HISTORY, GET_HISTORY_SUCCESS } from '../actions/get-history'
 
 export default function historyReducer(
     state = {
-      inProgress: false,
       transactions: []
     },
     action
   ) {
     switch (action.type) {
-    case GET_HISTORY:
+    case RESET_HISTORY:
       return Object.assign({}, state, {
-        inProgress: true
+        transactions: []
       })
     case GET_HISTORY_SUCCESS:
       return Object.assign({}, state, { 
-          inProgress: false,
           transactions: action.transactions
         })
     default:

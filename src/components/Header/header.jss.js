@@ -12,7 +12,7 @@ const style  = {
   },
   menuButton: {
     marginLeft: '-12px',
-    marginRight: '35px',
+    marginRight: '25px',
     color: colors.palette.common.white
   },
   moreVertButton: {
