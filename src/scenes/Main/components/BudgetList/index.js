@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import BudgetCategory from '../BudgetCategory'
+import BudgetCategory from './components/BudgetCategory'
 import { getBudgets } from '../../../../actions/budgets'
 
 class BudgetList extends Component {

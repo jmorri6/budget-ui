@@ -64,7 +64,7 @@ export function addSchedule(payload) {
 }
 
 export function toNumericString(number) {
-    return number.toLocaleString();
+    return parseFloat(number).toFixed(2);
 }
 export function getFormattedDate(date) {
     let d = new Date(date);

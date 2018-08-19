@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import Header from '../../components/Header'
 import AddScheduleDialog from './components/AddScheduleDialog'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -54,7 +53,6 @@ class ScheduledTransactions extends Component {
     render() {
         return(
         <div>
-            <Header title="Scheduled Transactions" />
             <Table>
                 <TableHead>
                 <TableRow>

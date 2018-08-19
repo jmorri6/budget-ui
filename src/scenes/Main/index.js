@@ -1,22 +1,19 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import Header from '../../components/Header'
-import BudgetList from './components/BudgetList'
-import Notes from './components/Notes'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { getBudgetBalance } from '../../actions/budgets';
 import { getAllCategories } from '../../actions/categories';
-import { getAvailableIncome } from '../../actions/income'
-import { toNumericString } from '../../services/index'
+import { getAvailableIncome } from '../../actions/income';
+import Header from './components/Header';
+import NavMenu from './components/NavMenu';
+import BudgetList from './components/BudgetList';
+import ManageIncome from './components/ManageIncome';
+import ManageBudget from './components/ManageBudget';
+import TransferFunds from './components/TransferFunds';
+import AddFunds from './components/AddFunds';
+import styles from './main.jss.js';
 
 class Main extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      showNotes: false
-    }
-  }
 
   componentDidMount() {
     this.props.getBudgetBalance();
@@ -24,29 +21,30 @@ class Main extends Component {
     this.props.getAvailableIncome();
   }
 
-  showNotes = () => {
-    this.setState({ showNotes: true });
-  }
-
-  hideNotes = () => {
-      this.setState({ showNotes: false });
-  }
-
   render() {
-    return(
-      <div>
-        <Header title="Morris Budget" showNotes={this.showNotes} nbrOfNotes={3}/>
-        <BudgetList />
-        <div style={{margin:'20px'}}>Budget balance: ${toNumericString(this.props.balance) || 0}</div>
-        <Notes isOpen={this.state.showNotes} close={this.hideNotes} />
+    return (
+      <div style={styles.root}>
+        <Header />
+        <NavMenu />
+        <main style={styles.content}>
+          {this.props.activeView === 0 && <BudgetList />}
+          {/* {this.props.activeView === 1 && <Reports />} */}
+          {this.props.activeView === 2 && <ManageBudget />}
+          {this.props.activeView === 3 && <TransferFunds />}
+          {this.props.activeView === 4 && <AddFunds />}
+          {this.props.activeView === 5 && <ManageIncome />}
+          {/* {this.props.activeView === 6 && <AutoDebits />} */}
+          
+        </main>
       </div>
-    )
-  }
+    );
+  };
 }
 
 const mapStateToProps = (state) => {
   return {
-      balance: state.budgets.balance
+      balance: state.budgets.balance,
+      activeView: state.viewState.active
   }
 }
 

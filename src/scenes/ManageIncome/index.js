@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Header from '../../components/Header'
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -122,7 +121,6 @@ class ManageIncome extends Component {
     render() {
         return(
         <div>
-            <Header title="Manage Funds" />
             <Grid container justify='center' style={{marginTop:'30px'}}>
                 <Grid item xs={8}>
                     <Paper elevation={5} style={{padding:'20px'}}>

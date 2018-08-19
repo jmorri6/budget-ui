@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import Header from '../../components/Header'
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -81,7 +80,6 @@ class BudgetHistory extends Component {
     render() {
         return(
         <div>
-            <Header title="History" />
             <Grid container justify='center' style={{marginTop:'30px'}}>
                 <Grid item xs={10}>
                     <Paper style={{padding:'15px'}}>
