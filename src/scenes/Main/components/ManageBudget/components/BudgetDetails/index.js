@@ -12,7 +12,7 @@ import Input from '@material-ui/core/Input';
 import Switch from '@material-ui/core/Switch';
 import { findIndex } from 'lodash'
 import { toNumericString } from '../../../../../../services/index'
-import Confirmation from '../../../../../../components/Confirmation';
+// import Confirmation from '../../../../../../components/Confirmation';
 
 class BudgetDetails extends Component {
     constructor(props) {
@@ -30,7 +30,6 @@ class BudgetDetails extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.budget);
         if (nextProps.budget.category !== this.props.budget.category) {
             let id = this.getCategoryId(nextProps.budget.category.name);
             this.setState({ categoryId: id, categoryName: nextProps.budget.category.name });
@@ -133,7 +132,7 @@ class BudgetDetails extends Component {
   render() {
     return(
         <React.Fragment>
-        <Grid container justify='center' >
+        <Grid container justify='center' style={{marginTop:10}}>
             <Grid container>
                 <Grid item xs={8}>
                     <Input

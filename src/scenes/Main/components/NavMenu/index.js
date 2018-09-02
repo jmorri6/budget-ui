@@ -19,6 +19,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import SwapHoriz from '@material-ui/icons/SwapHoriz';
 import Edit from '@material-ui/icons/EditOutlined';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import SearchIcon from '@material-ui/icons/Search';
 import styles from './nav.jss.js';
 
 
@@ -27,7 +28,7 @@ class NavMenu extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            open: true
+            open: false
         };
     }
     
@@ -46,22 +47,28 @@ class NavMenu extends Component {
               <List>
                 <ListItem button onClick = {() => this.props.updateActiveView(0)}>
                     <ListItemIcon>
-                    <HomeIcon color="primary"/>
+                    <HomeIcon />
                     </ListItemIcon>
                     <ListItemText primary="Budget" />
                 </ListItem>
                 <ListItem button onClick = {() => this.props.updateActiveView(1)}>
                     <ListItemIcon>
-                    <BarChartIcon color="secondary"/>
+                    <BarChartIcon />
                     </ListItemIcon>
                     <ListItemText primary="Reports" />
+                </ListItem>
+                <ListItem button onClick = {() => this.props.updateActiveView(7)}>
+                    <ListItemIcon>
+                    <SearchIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="History" />
                 </ListItem>
               </List>
               <Divider />
               <List>
                 <ListItem button onClick = {this.toggleExpand}>
                 <ListItemIcon>
-                    <AssignmentIcon color="action"/>
+                    <AssignmentIcon />
                 </ListItemIcon>
                 <ListItemText primary="Manage Budget" />
                 {this.state.open ? <ExpandLess /> : <ExpandMore />}

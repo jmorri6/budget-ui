@@ -11,8 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import { getSchedules } from '../../actions/schedule'
-import { deleteSchedule, getFormattedDate} from '../../services/index';
+import { getSchedules } from '../../../../actions/schedule'
+import { deleteSchedule, getFormattedDate} from '../../../../services/index';
 
 const style = {
     buttonDiv: {
@@ -28,7 +28,7 @@ class ScheduledTransactions extends Component {
             isDialogOpen: false
         }
     }
-
+    
     componentWillMount = () => {
         this.props.getSchedules();
     }

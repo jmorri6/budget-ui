@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getBudgetBalance } from '../../actions/budgets';
 import { getAllCategories } from '../../actions/categories';
 import { getAvailableIncome } from '../../actions/income';
 import Header from './components/Header';
@@ -11,12 +10,14 @@ import ManageIncome from './components/ManageIncome';
 import ManageBudget from './components/ManageBudget';
 import TransferFunds from './components/TransferFunds';
 import AddFunds from './components/AddFunds';
+import ScheduledTransactions from './components/ScheduledTransactions';
+import BudgetHistory from './components/BudgetHistory';
+import Reports from './components/Reports';
 import styles from './main.jss.js';
 
 class Main extends Component {
 
   componentDidMount() {
-    this.props.getBudgetBalance();
     this.props.getAllCategories();
     this.props.getAvailableIncome();
   }
@@ -28,13 +29,13 @@ class Main extends Component {
         <NavMenu />
         <main style={styles.content}>
           {this.props.activeView === 0 && <BudgetList />}
-          {/* {this.props.activeView === 1 && <Reports />} */}
+          {this.props.activeView === 1 && <Reports />}
           {this.props.activeView === 2 && <ManageBudget />}
           {this.props.activeView === 3 && <TransferFunds />}
           {this.props.activeView === 4 && <AddFunds />}
           {this.props.activeView === 5 && <ManageIncome />}
-          {/* {this.props.activeView === 6 && <AutoDebits />} */}
-          
+          {this.props.activeView === 6 && <ScheduledTransactions />}
+          {this.props.activeView === 7 && <BudgetHistory />}
         </main>
       </div>
     );
@@ -50,7 +51,6 @@ const mapStateToProps = (state) => {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getBudgetBalance,
     getAllCategories,
     getAvailableIncome
   }, dispatch)

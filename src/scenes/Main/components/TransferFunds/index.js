@@ -90,7 +90,7 @@ class ManageIncome extends Component {
 
     render() {
         return(
-        <Grid container justify='center' style={{marginTop:'30px'}}>
+        <Grid container justify='center'>
             <Grid item xs={8}>
                 <Paper elevation={5} style={{padding:'20px'}}>
                     <Typography variant="headline" component="h2">Transfer Funds</Typography>

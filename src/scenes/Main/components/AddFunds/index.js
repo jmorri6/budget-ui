@@ -78,7 +78,7 @@ class ManageIncome extends Component {
 
     render() {
         return(
-        <Grid container justify='center' style={{marginTop:'30px'}}>
+        <Grid container justify='center'>
             <Grid item xs={8}>
                 <Paper elevation={5} style={{padding:'20px'}}>
                     <Typography variant="headline" component="h2">Add Funds</Typography>
@@ -115,7 +115,7 @@ class ManageIncome extends Component {
                                 id="description"
                                 fullWidth
                                 value={this.state.desc}
-                                onChange={this.descChange}
+                                onChange={this.descChanged}
                                 />
                             </FormControl>
                         </Grid>

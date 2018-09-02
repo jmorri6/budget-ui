@@ -7,9 +7,11 @@
         display: 'flex',
       },
       content: {
-        marginTop: '30px',
         flexGrow: 1,
-        padding: 24,
+        paddingTop: 60,
+        paddingRight: 24,
+        paddingBottom: 24,
+        paddingLeft: 40,
         minWidth: 0, // So the Typography noWrap works
       },
   };

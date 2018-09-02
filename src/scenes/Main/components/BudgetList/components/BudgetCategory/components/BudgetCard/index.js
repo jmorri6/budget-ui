@@ -12,8 +12,6 @@ import style from './budget-card.jss.js';
 import DebitModal from './components/DebitModal';
 import { toNumericString } from '../../../../../../../../services/index'
 
-
-//TODO: YELLOW FOR LOW BALANCE
 class BudgetCard extends Component {
 
     constructor(props) {

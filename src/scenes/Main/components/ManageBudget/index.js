@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import BudgetSelection from './components/BudgetSelection';
 import BudgetDetails from './components/BudgetDetails';
 import { getBudgets } from '../../../../actions/budgets';
@@ -50,22 +51,24 @@ class ManageBudget extends Component {
 
     render() {
         return(
-            <Grid style={styles.grid} container justify="space-around" alignItems="center">
-                <Grid item xs={2}>
-                    <BudgetSelection 
-                        categories={this.props.categoriesWithBudgets} 
-                        onChange={this.budgetChanged}
-                        selected={this.state.selectedBudget} />
+            <Paper>
+                <Grid style={styles.grid} container justify="space-around">
+                    <Grid item xs={2}>
+                        <BudgetSelection 
+                            categories={this.props.categoriesWithBudgets} 
+                            onChange={this.budgetChanged}
+                            selected={this.state.selectedBudget} />
+                    </Grid>
+                    <Grid item>
+                        <BudgetDetails
+                        budget={this.state.selectedBudget}
+                        save={this.saveBudget}
+                        update={this.updateBudget}
+                        delete={this.deleteBudget}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    <BudgetDetails
-                    budget={this.state.selectedBudget}
-                    save={this.saveBudget}
-                    update={this.updateBudget}
-                    delete={this.deleteBudget}
-                    />
-                </Grid>
-            </Grid>
+            </Paper>
         )
     }
 }

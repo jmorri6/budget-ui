@@ -11,9 +11,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import FormControl from '@material-ui/core/FormControl';
-import { toNumericString } from '../../services';
-import { getHistory, resetHistory } from '../../actions/get-history';
-import BudgetDropDown from '../../components/BudgetDropDown';
+import { toNumericString } from '../../../../services';
+import { getHistory, resetHistory } from '../../../../actions/get-history';
+import BudgetDropDown from '../../../../components/BudgetDropDown';
 
 class BudgetHistory extends Component {
 
@@ -80,7 +80,7 @@ class BudgetHistory extends Component {
     render() {
         return(
         <div>
-            <Grid container justify='center' style={{marginTop:'30px'}}>
+            <Grid container justify='center'>
                 <Grid item xs={10}>
                     <Paper style={{padding:'15px'}}>
                         <Grid container justify='space-around' style={{marginBottom:'30px'}}>

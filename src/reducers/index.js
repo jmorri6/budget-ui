@@ -5,6 +5,7 @@ import incomeReducer from './income-reducer';
 import historyReducer from './history-reducer';
 import scheduleReducer from './schedule-reducer';
 import activeViewReducer from './active-view-reducer';
+import reportReducer from './report-reducer';
 
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   history: historyReducer,
   schedules: scheduleReducer,
   viewState: activeViewReducer,
+  reportState: reportReducer,
 })
   
 export default rootReducer

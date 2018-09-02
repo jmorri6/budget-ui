@@ -7,8 +7,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { addSchedule } from '../../../../services/index';
-import BudgetDropDown from '../../../../components/BudgetDropDown';
+import { addSchedule } from '../../../../../../services/index';
+import BudgetDropDown from '../../../../../../components/BudgetDropDown';
 
 //TODO: Notes for deduction
 class AddScheduleDialog extends Component {
